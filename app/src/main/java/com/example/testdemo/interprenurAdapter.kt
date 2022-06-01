@@ -13,7 +13,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class interprenurAdapter(var Cont:Context,var phone:String): RecyclerView.Adapter<interprenurAdapter.ViewHolder>() {
+class interprenurAdapter(var Cont:Context,var phone:String,var status:String): RecyclerView.Adapter<interprenurAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
     //private lateinit var context:Context;
     var contct:List<String> = listOf()
@@ -90,6 +90,7 @@ class interprenurAdapter(var Cont:Context,var phone:String): RecyclerView.Adapte
                 val titleName:String=itemtitle.text.toString()
                 val i=Intent(Cont,ideapage::class.java)
                 i.putExtra("title12",titleName)
+                i.putExtra("status1",status)
                 Cont.startActivity(i)
             }
 

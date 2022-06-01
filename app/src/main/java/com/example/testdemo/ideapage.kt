@@ -37,6 +37,8 @@ class ideapage: AppCompatActivity(){
         val obj=this
         val i:Intent=getIntent()
         val titleName=i.getStringExtra("title12")
+        val Status=i.getStringExtra("status1").toString()
+        var phon:String?=i.getStringExtra("phone").toString()
         val descTextView=findViewById<TextView>(R.id.textView9)
         val ideaImageView=findViewById<ImageView>(R.id.ideaimag)
         val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
@@ -100,16 +102,22 @@ class ideapage: AppCompatActivity(){
         val popup: View =layoutInflater.inflate(R.layout.investment,null)
         val text1=popup.findViewById<TextView>(R.id.textView13)
         val text2=popup.findViewById<TextView>(R.id.investment)
+        val lu=findViewById<LinearLayout>(R.id.layout1)
         val btn1=popup.findViewById<Button>(R.id.plus)
         val btn2=popup.findViewById<Button>(R.id.minus)
         val btn3=popup.findViewById<Button>(R.id.cancel)
         val btn4=popup.findViewById<Button>(R.id.done)
+        if(Status.equals("false")){
+            lu.visibility=View.GONE
+
+        }
         diaglogbuilder.setView(popup)
         val dialog=diaglogbuilder.create()
         dialog.show()
-        btn3.setOnClickListener(){
-            dialog.dismiss()
-        }
+
+            btn3.setOnClickListener(){
+                dialog.dismiss()
+            }
             btn1.setOnClickListener(){
                 val temp=text2.text.toString()
                 val temp1:Int=temp.toInt()+1000
@@ -120,6 +128,10 @@ class ideapage: AppCompatActivity(){
                 val temp1:Int=temp.toInt()-1000
                 text2.setText(temp1.toString())
             }
+            btn4.setOnClickListener {
+                firebaseref.child(phon.toString()).child("Investment").child(titleName.toString()).setValue(text2.text)
+            }
+
 
         }
 

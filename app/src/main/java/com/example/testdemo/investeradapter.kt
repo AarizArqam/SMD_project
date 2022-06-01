@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter(var Cont:Context,var phon:String,var status:String): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class investeradapter(var Cont: Context): RecyclerView.Adapter<investeradapter.ViewHolder>() {
     var titles:List<String> = listOf()
     //private lateinit var context:Context;
     var contct:List<String> = listOf()
@@ -37,8 +39,8 @@ class RecyclerAdapter(var Cont:Context,var phon:String,var status:String): Recyc
     init {
         val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
         titles.toMutableList()
-            //val checkQuery: Query = firebasereference.orderByChild("phone")
-        firebasereference.addValueEventListener(object:ValueEventListener{
+        //val checkQuery: Query = firebasereference.orderByChild("phone")
+        firebasereference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for(data in snapshot.children){
@@ -58,16 +60,16 @@ class RecyclerAdapter(var Cont:Context,var phon:String,var status:String): Recyc
         //titles+=("dsakf;lkj")
 
     }
-    override fun onCreateViewHolder(parent:ViewGroup,viewtype:Int):ViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewtype:Int):ViewHolder{
         val v= LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
         return ViewHolder(v)
     }
 
 
-    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: investeradapter.ViewHolder, position: Int) {
         holder.itemtitle.text= titles[position]
         holder.likecount.text= likecount[position]
-       // holder.itemImage.setImageResource(itemImages[position])
+        // holder.itemImage.setImageResource(itemImages[position])
         storagereference.child(contct[position]).child(holder.itemtitle.text.toString()).downloadUrl.addOnSuccessListener {
             Picasso.get().load(it).into(holder.itemImage)
         }
@@ -78,7 +80,7 @@ class RecyclerAdapter(var Cont:Context,var phon:String,var status:String): Recyc
         return titles.size
     }
 
-    inner class ViewHolder(itemview: View):RecyclerView.ViewHolder(itemview){
+    inner class ViewHolder(itemview: View): RecyclerView.ViewHolder(itemview){
         var itemImage: ImageView
         var itemtitle: TextView
         var likecount: TextView
@@ -91,10 +93,10 @@ class RecyclerAdapter(var Cont:Context,var phon:String,var status:String): Recyc
             likecount= itemview.findViewById(R.id.item_count)
             itemview.setOnClickListener(){
                 val titleName:String=itemtitle.text.toString()
-                val i=Intent(Cont,ideapage::class.java)
+                val i= Intent(Cont,ideapage::class.java)
                 i.putExtra("title12",titleName)
-                i.putExtra("status1",status)
-                i.putExtra("phone",phon)
+                //i.putExtra("status1",status)
+                //i.putExtra("phone",phon)
                 Cont.startActivity(i)
             }
 

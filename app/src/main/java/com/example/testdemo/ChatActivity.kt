@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
@@ -50,7 +52,7 @@ class ChatActivity : AppCompatActivity() {
         chatRecyclerView.adapter = messageAdapter
 
         // logic for adding data to recyclerView
-        mDbRef.child(senderRoom!!).child("messages")
+        mDbRef.child(receiverRoom!!).child("messages")
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -75,9 +77,9 @@ class ChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener{
 
             val message = messageBox.text.toString()
-            val messageObject = Message(message, senderUid, receiverUid)
+            val messageObject = Message(message,senderUid)
 
-            mDbRef.child(receiverRoom!!).child("messages").push()
+            mDbRef.child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     Toast.makeText(context,"wowwwwwwwwhowwwwww",Toast.LENGTH_SHORT).show()
                 }

@@ -58,7 +58,7 @@ class Home: AppCompatActivity() {
             layoutManager= LinearLayoutManager(this)
             var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
             recyclerView.layoutManager= layoutManager
-            adapter= RecyclerAdapter(this)
+            adapter= RecyclerAdapter(this,phon,status)
             recyclerView.adapter = adapter
 
         }else{
@@ -66,7 +66,7 @@ class Home: AppCompatActivity() {
             layoutManager= LinearLayoutManager(this)
             var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
             recyclerView.layoutManager= layoutManager
-            adapter1 = interprenurAdapter(this,phon)
+            adapter1 = interprenurAdapter(this,phon,status)
             recyclerView.adapter = adapter
 
 
